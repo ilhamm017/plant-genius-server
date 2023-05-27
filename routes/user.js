@@ -1,5 +1,4 @@
 const userController = require('../controllers/userControllers')
-
 const userRoutes = [
   {
     path: '/register',

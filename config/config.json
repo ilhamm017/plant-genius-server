@@ -1,11 +1,11 @@
 
 {
   "development": {
-    "username": "plantGenius-db",
-    "password": "mU6O'njfjZM|u6:U",
+    "username": "thouka",
+    "password": "180618",
     "database": "plant_genius_db",
-    "host": "34.101.113.102",
-    "dialect": "mysql"
+    "host": "localhost",
+    "dialect": "postgresql"
   },
   "test": {
     "username": "root",
