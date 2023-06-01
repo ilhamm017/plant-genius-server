@@ -1,19 +1,14 @@
 const { Authentication } = require('../middleware/Authentication')
-
+const { predict } = require('../controllers/fungsiControllers')
 const fungsiRoutes = [
-    {
-        path: '/fungsi',
-        method: 'GET',
-        handler: (request, h) => {
-        return h.response({
-            message: 'pass authentication'
-            //TODO sambungin ke ML
-        })
-        },
-        options: {
-            pre: [Authentication]
-        }
+  {
+    path: '/fungsi',
+    method: 'POST',
+    handler: predict,
+    options: {
+      pre: [Authentication]
     }
+  }
 ]
 
 module.exports = { fungsiRoutes }

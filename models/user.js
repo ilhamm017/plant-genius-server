@@ -1,5 +1,5 @@
-"use strict";
-const { Model } = require("sequelize");
+'use strict'
+const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -7,23 +7,23 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
+    static associate (models) {
       // define association here
     }
   }
   User.init(
     {
-      nama: {
+      name: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          isAlpha: {
-            msg: "Nama must only contain alphabetic characters",
-          },
           notEmpty: {
-            msg: "Nama cannot be empty",
+            msg: 'Nama cannot be empty'
           },
-        },
+          isAlpha: {
+            msg: 'Nama must only contain alphabetic characters'
+          }
+        }
       },
       email: {
         type: DataTypes.STRING,
@@ -31,47 +31,68 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
         validate: {
           notNull: {
-            msg: "Email cannot be omitted",
+            msg: 'Email cannot be omitted'
           },
           notEmpty: {
-            msg: "Email cannot be an empty string",
+            msg: 'Email cannot be an empty string'
           },
           isEmail: {
             args: true,
-            msg: "Invalid email format",
-          },
-        },
+            msg: 'Invalid email format'
+          }
+        }
       },
       password: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notEmpty: {
-            msg: "Password cannot be empty",
+            args: true,
+            msg: 'Password tidak boleh kosong'
+          },
+          len: {
+            args: [6, 23],
+            msg: 'Password harus terdiri dari 6 hingga 23 karakter'
+          },
+          notNull: {
+            args: true,
+            msg: 'Password tidak boleh kosong'
           },
           is: {
-            args: /^(?=.*\d)(?=.*[a-zA-Z]).{6,}$/,
-            msg: "Password must be a combination of letters and numbers with a minimum length of 6 characters",
-          },
-        },
-      },
+            args: /(?=.*\d)(?=.*[a-zA-Z])/,
+            msg: 'Password harus mengandung kombinasi huruf dan angka'
+          }
+        }
+      },      
       no_telepon: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         validate: {
           isNumeric: {
-            msg: "Nomor telepon must only contain numeric characters",
+            msg: 'Nomor telepon must only contain numeric characters'
           },
           notEmpty: {
-            msg: "Nomor telepon cannot be empty",
-          },
-        },
-      },
+            msg: 'Nomor telepon cannot be empty'
+          }
+        }
+      }
     },
     {
       sequelize,
-      modelName: "User",
+      modelName: 'User',
+      validate: {
+        // checkEmaildanPhone () {
+        //   if (!this.email && !this.no_telepon) {
+        //     throw new Error('Email atau nomor Telepone harus diisi !!')
+        //   }
+        // },
+        validatePassword () {
+          if(!this.password) {
+            throw new Error('Password tidak boleh kosong')
+          }
+        }
+      }
     }
-  );
-  return User;
-};
+  )
+  return User
+}

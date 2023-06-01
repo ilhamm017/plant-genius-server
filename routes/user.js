@@ -1,4 +1,5 @@
 const userController = require('../controllers/userControllers')
+const { Authentication } = require('../middleware/Authentication')
 const userRoutes = [
   {
     path: '/register',
@@ -13,7 +14,10 @@ const userRoutes = [
   {
     path: '/logout',
     method: 'POST',
-    handler: userController.logout
+    handler: userController.logout,
+    options: {
+      pre: [Authentication]
+    }
   }
 ]
 
