@@ -30,8 +30,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true,
         validate: {
-          notNull: {
-            msg: 'Email cannot be omitted'
+          validator (value) {
+            if (!value) {
+              throw new Error('Email tidak boleh kosong')
+            }
           },
           notEmpty: {
             msg: 'Email cannot be an empty string'
@@ -45,25 +47,15 @@ module.exports = (sequelize, DataTypes) => {
       password: {
         type: DataTypes.STRING,
         allowNull: false,
+        notEmpty: true,
         validate: {
-          notEmpty: {
-            args: true,
-            msg: 'Password tidak boleh kosong'
-          },
-          len: {
-            args: [6, 23],
-            msg: 'Password harus terdiri dari 6 hingga 23 karakter'
-          },
-          notNull: {
-            args: true,
-            msg: 'Password tidak boleh kosong'
-          },
-          is: {
-            args: /(?=.*\d)(?=.*[a-zA-Z])/,
-            msg: 'Password harus mengandung kombinasi huruf dan angka'
+          validPassword (value) {
+            if (!value) {
+              throw new Error('password tidak boleh kosong')
+            }
           }
         }
-      },      
+      },
       no_telepon: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -81,14 +73,9 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: 'User',
       validate: {
-        // checkEmaildanPhone () {
-        //   if (!this.email && !this.no_telepon) {
-        //     throw new Error('Email atau nomor Telepone harus diisi !!')
-        //   }
-        // },
-        validatePassword () {
-          if(!this.password) {
-            throw new Error('Password tidak boleh kosong')
+        checkEmaildanPhone () {
+          if (!this.email && !this.no_telepon) {
+            throw new Error('Email atau nomor Telepone harus diisi !!')
           }
         }
       }
