@@ -1,4 +1,4 @@
-# Login
+# Register
 
 Digunakan untuk mendaftarkan User
 
