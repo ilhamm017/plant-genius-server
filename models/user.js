@@ -30,10 +30,8 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true,
         validate: {
-          validator (value) {
-            if (!value) {
-              throw new Error('Email tidak boleh kosong')
-            }
+          notNull: {
+            msg: 'Email cannot be omitted'
           },
           notEmpty: {
             msg: 'Email cannot be an empty string'

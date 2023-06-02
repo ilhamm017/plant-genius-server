@@ -1,10 +1,9 @@
 const { User } = require('../models')
 const { blockedToken } = require('../models')
-// eslint-disable-next-line no-unused-vars
 const { hash, compare } = require('../helpers/hash')
 const { sign } = require('../helpers/jwt')
+const { passwordSchema } = require('../helpers/passwordSchema')
 const Boom = require('@hapi/boom')
-const { DATE } = require('sequelize')
 
 const userController = {
   signUp: async (request, h) => {
@@ -17,7 +16,12 @@ const userController = {
           message: 'Email already registered'
         })
       }
-
+      const { error: passwordError } = passwordSchema.validate(password)
+      if (passwordError) {
+        return h.response({
+          message: passwordError.details[0].message
+        })
+      }
       password = hash(password)
       const createUser = await User.create({ name, email, password, no_telepon }) // memasukkan name, email, password ke dalam database sebagai pengguna baru, lalu memasukkan datanya ke dalam variabel createUser
       return h.response({
