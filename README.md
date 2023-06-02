@@ -4,6 +4,8 @@ server for plant genius application
 
 ## Open Endpoints
 
+Header Authorization = "token" 
+
 Open endpoints require no Authentication.
 
 * [Register](examples/users/register.md) : `POST /register/`
