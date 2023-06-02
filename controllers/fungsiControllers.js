@@ -13,7 +13,9 @@ module.exports = {
       fs.readFileSync(imagePath)
       fs.unlinkSync(imagePath)
       createHistory.createHistory(userId, imagePath)
-      return h.response('gambar diterima')
+      return h.response({
+        message: 'gambar diterima'
+      })
     } catch (error) {
       throw Boom.badData()
     }

@@ -36,7 +36,9 @@ module.exports = {
           }
         }
       })
-      return h.response('History berhasil dihapus !')
+      return h.response({
+        message: 'History berhasil dihapus !'
+      })
     } catch (error) {
       throw Boom.badRequest(error)
     }
