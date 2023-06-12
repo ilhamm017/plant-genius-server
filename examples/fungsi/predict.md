@@ -28,11 +28,12 @@ Melakukan prediksi penyakit tanaman (ALPA).
 **Code** : `200 OK`
 
 **Content example**
-
+```json
 {
-    "message": "gambar diterima"
+    "penyakit": "Mango sooty mould",
+    "penanganan": "rawat dengan baik !"
 }
-
+```
 ## Error Response
 
 **Code** : `401 BAD REQUEST`

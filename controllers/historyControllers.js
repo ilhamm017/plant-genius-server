@@ -1,7 +1,5 @@
-const { BelongsToMany } = require('sequelize')
 const Boom = require('@hapi/boom')
 const { History } = require('../models')
-const history = require('../models/history')
 const { Op } = require('sequelize')
 
 module.exports = {

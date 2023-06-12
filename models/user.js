@@ -26,10 +26,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         notEmpty: true
-      },
-      no_telepon: {
-        type: DataTypes.STRING,
-        allowNull: true
       }
     },
     {

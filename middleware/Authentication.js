@@ -19,9 +19,9 @@ module.exports = {
       }
 
       const decodedToken = verify(token) // verify token
-      const { id, email, no_telepon , exp } = decodedToken
+      const { id, email, exp } = decodedToken
 
-      const user = await Models.User.findOne({ where: { id } }) // Mengambil data pengguna berdasarkan id
+      const user = await Models.User.findOne({ where: { id, email } }) // Mengambil data pengguna berdasarkan id
       if (!user) {
         throw Boom.unauthorized('Pengguna tidak ditemukan')
       }
@@ -29,7 +29,6 @@ module.exports = {
       request.auth.credentials = {
         id: user.id,
         email: user.email,
-        no_telepon: user.no_telepon,
         exp
       }
       console.log(decodedToken)

@@ -56,10 +56,10 @@ Used to collect a Token for a registered User.
     "message": "Password salah!"
 }
 ```
-**Condition** : Jika email dan nomor telefon kosong.
+**Condition** : Jika email kosong.
 **Content** :
 ```json
 {
-    "message": "Email atau nomor telefon diperlukan"
+    "message": "Email diperlukan"
 }
 ```

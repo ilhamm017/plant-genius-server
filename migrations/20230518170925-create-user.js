@@ -19,9 +19,6 @@ module.exports = {
       email: {
         type: Sequelize.STRING
       },
-      no_telepon: {
-        type: Sequelize.STRING
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

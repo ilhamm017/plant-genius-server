@@ -14,8 +14,7 @@ Digunakan untuk mendaftarkan User
 {
     "name": "[valid nama]",
     "email": "[valid alamat email]",
-    "password": "[valid password]",
-    "no_telepon": "[valid nomor telefon]"
+    "password": "[valid password]"
 }
 ```
 
@@ -25,8 +24,7 @@ Digunakan untuk mendaftarkan User
 {
     "name": "admin",
     "email": "admin@email.com",
-    "password": "admin123",
-    "no_telepon": "0851266637223"
+    "password": "admin123"
 }
 ```
 
@@ -43,7 +41,6 @@ Digunakan untuk mendaftarkan User
         "name": "admin",
         "email": "admin@email.com",
         "password": "$2b$10$FmSo.eRtImLh2UsDpE/Jm.Qdv3.Unvez6oFn7CCVPggRd423eOE2m",
-        "no_telepon": "0851266637223",
         "updatedAt": "2023-06-02T02:38:38.490Z",
         "createdAt": "2023-06-02T02:38:38.490Z"
     }
@@ -54,7 +51,7 @@ Digunakan untuk mendaftarkan User
 
 **Code** : `400 BAD REQUEST`
 
-**Condition** : Jika Menggunakan Email dan Nomor telefon yang sama.
+**Condition** : Jika Menggunakan Email yang sama.
 
 **Content** :
 
@@ -64,12 +61,7 @@ Digunakan untuk mendaftarkan User
     "details": {
         "email": {
             "message": "Email already registered"
-        },
-        "no_telepon": [
-            {
-                "message": "Phone number already registered "
-            }
-        ]
+        }
     }
 }
 ```
@@ -83,15 +75,12 @@ Digunakan untuk mendaftarkan User
     "details": {
         "email": {
             "message": "email tidak valid"
-        },
-        "no_telepon": {
-            "message": "Format nomor telepon tidak valid"
         }
     }
 }
 ```
 
-**Condition** : Jika nama, email, nomor telefon, dan password kosong.
+**Condition** : Jika nama, email dan password kosong.
 
 **Content** :
 ```json
@@ -103,9 +92,6 @@ Digunakan untuk mendaftarkan User
         },
         "name": {
             "message": "name tidak boleh kosong"
-        },
-        "no_telepon": {
-            "message": "nomor telefon tidak boleh kosong"
         },
         "password": {
             "message": "Password tidak boleh kosong atau harus mengandung kombinasi huruf dan angka"

@@ -1,7 +1,7 @@
 
 const validatePassword = (password, errors) => {
   if (!password) {
-    console.log('paswodnya bang :'+password);
+    console.log('paswodnya bang :' + password)
     errors.set('password', { message: 'Password tidak boleh kosong' })
   }
 
@@ -41,15 +41,4 @@ const validateName = (name, errors) => {
   }
 }
 
-const validateNo_telepon = (no_telepon, errors) => {
-  if (!no_telepon) {
-    errors.set('no_telepon', { message: 'nomor telefon tidak boleh kosong' })
-  } else {
-    const no_teleponRegex = /^\d{10,12}$/
-    if (!no_teleponRegex.test(no_telepon)) {
-      errors.set('no_telepon', { message: 'Format nomor telepon tidak valid' })
-    }
-  }
-}
-
-module.exports = { validatePassword, validateEmail, validateName, validateNo_telepon }
+module.exports = { validatePassword, validateEmail, validateName }
