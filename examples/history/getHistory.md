@@ -2,7 +2,7 @@
 
 Mendapatkan semua History prediksi penyakit tanaman .
 
-**URL** : `/fungsi/`
+**URL** : `/getHistory`
 
 **Method** : `GET`
 
