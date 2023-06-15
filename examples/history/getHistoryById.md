@@ -1,8 +1,8 @@
 # History
 
-Mendapatkan semua History prediksi penyakit tanaman .
+Mendapatkan History prediksi penyakit tanaman berdasarkan Id.
 
-**URL** : `/fungsi/`
+**URL** : `/getHistory/:id`
 
 **Method** : `GET`
 
@@ -16,24 +16,27 @@ Mendapatkan semua History prediksi penyakit tanaman .
 
 ```json
 {
-    "history": [
-        {
-            "id": 1,
-            "result": "Mango sooty mould",
-            "imageUrl": "http://linkgambar.com",
-            "createdAt": "2023-06-14T20:38:09.000Z"
-        },
-        {
-            "id": 2,
-            "result": "Nama penyakit",
-            "imageUrl": "link gambar",
-            "createdAt": "2023-06-14T20:53:19.000Z"
-        }
-    ]
+    "id": 2,
+    "penyakit": "Nama penyakitnya",
+    "penanganan": "Penanganannya",
+    "imageUrl": "link untuk gambarnya"
 }
 ```
 
 ## Error Response
+
+**Code** : `404 NOT FOUND`
+
+**Condition** : Ketika History yang dicari tidak ada
+
+**Content** 
+```json
+{
+    "statusCode": 404,
+    "error": "Not Found",
+    "message": "History tidak ditemukan !"
+}
+```
 
 **Code** : `401 BAD REQUEST`
 
