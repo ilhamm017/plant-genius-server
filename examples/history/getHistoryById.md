@@ -1,40 +1,38 @@
-# Predict
+# History
 
-Melakukan prediksi penyakit tanaman (ALPA).
+Mendapatkan semua History prediksi penyakit tanaman .
 
 **URL** : `/fungsi/`
 
-**Method** : `POST`
+**Method** : `GET`
 
 **Auth required** : YES
-
-**Data Constraint**
-
-```json
-{
-    "imageBase64": "[Base64]"
-}
-```
-**Data Example**
-
-```json
-{
-    "imageBase64": "/9j/4AAQSkZJRgABAQAAAQABAAD/"
-}
-```
 
 ## Success Response
 
 **Code** : `200 OK`
 
 **Content example**
+
 ```json
 {
-    "penyakit": "Mango sooty mould",
-    "penanganan": "rawat dengan baik !",
-    "imageUrl": "http://linkgambar.com"
+    "history": [
+        {
+            "id": 1,
+            "result": "Mango sooty mould",
+            "imageUrl": "http://linkgambar.com",
+            "createdAt": "2023-06-14T20:38:09.000Z"
+        },
+        {
+            "id": 2,
+            "result": "Nama penyakit",
+            "imageUrl": "link gambar",
+            "createdAt": "2023-06-14T20:53:19.000Z"
+        }
+    ]
 }
 ```
+
 ## Error Response
 
 **Code** : `401 BAD REQUEST`

@@ -1,7 +1,6 @@
 
 const validatePassword = (password, errors) => {
   if (!password) {
-    console.log('paswodnya bang :' + password)
     errors.set('password', { message: 'Password tidak boleh kosong' })
   }
 

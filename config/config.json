@@ -21,10 +21,11 @@
     }
   },
   "production": {
-    "username": "root",
-    "password": "ox[f[rZbrSbbNy+S",
+    "username": "thouka",
+    "password": "180618",
     "database": "plant_genius_db",
-    "host": "34.101.113.102",
+    "host": "127.0.0.1",
+    "port":"3306",
     "dialect": "mysql",
     "define": {
       "validate": true

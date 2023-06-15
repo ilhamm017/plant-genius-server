@@ -1,8 +1,8 @@
 # History
 
-Mendapatkan History prediksi penyakit tanaman (ALPA).
+Mendapatkan History prediksi penyakit tanaman berdasarkan Id.
 
-**URL** : `/fungsi/`
+**URL** : `/getHistory/:id`
 
 **Method** : `GET`
 
@@ -14,32 +14,29 @@ Mendapatkan History prediksi penyakit tanaman (ALPA).
 
 **Content example**
 
+```json
 {
-    "history": [
-        {
-            "id": 18,
-            "result": "gambar.jpg"
-        },
-        {
-            "id": 19,
-            "result": "gambar.jpg"
-        },
-        {
-            "id": 20,
-            "result": "gambar.jpg"
-        },
-        {
-            "id": 21,
-            "result": "gambar.jpg"
-        },
-        {
-            "id": 22,
-            "result": "gambar.jpg"
-        }
-    ]
+    "id": 2,
+    "penyakit": "Nama penyakitnya",
+    "penanganan": "Penanganannya",
+    "imageUrl": "link untuk gambarnya"
 }
+```
 
 ## Error Response
+
+**Code** : `404 NOT FOUND`
+
+**Condition** : Ketika History yang dicari tidak ada
+
+**Content** 
+```json
+{
+    "statusCode": 404,
+    "error": "Not Found",
+    "message": "History tidak ditemukan !"
+}
+```
 
 **Code** : `401 BAD REQUEST`
 

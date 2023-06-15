@@ -3,35 +3,27 @@ const { blockedToken } = require('../models')
 const { hash, compare } = require('../helpers/hash')
 const { sign } = require('../helpers/jwt')
 const { validatePassword, validateEmail, validateName } = require('../helpers/validate')
-
-const userController = {
-
+module.exports = {
   signUp: async (request, h) => {
     try {
       let { name, email, password } = request.payload
       email = email.toLowerCase()
-
-      const errors = new Map() // Menyimpan kesalahan yang terjadi
+      const errors = new Map() // Menyimpan kesalahan yang terjadi menggunakan Map()
       validateEmail(email, errors)
       validateName(name, errors)
       validatePassword(password, errors)
-
-      const verifyEmailUser = await User.findOne({
+      await User.findOne({
         where: {
           email
         }
-      })
-
-      if (verifyEmailUser) {
-        if (!errors.has('email')) {
-          errors.set('email', [])
+      }).then(user => {
+        if (user) {
+          errors.set('email', { message: 'Email sudah terdaftar' })
         }
-        errors.set('email', { message: 'Email already registered' })
-      }
+      })
 
       if (errors.size > 0) {
         const errorDetails = Object.fromEntries(errors)
-
         return h.response({
           message: 'Validation Error',
           details: errorDetails
@@ -45,26 +37,9 @@ const userController = {
         User: createUser
       }).code(201)
     } catch (error) {
-      if (error.name === 'SequelizeValidationError') {
-        const errorDetails = {}
-
-        error.errors.forEach((err) => {
-          const { path, message } = err
-          if (!errorDetails[path]) {
-            errorDetails[path] = []
-          }
-          errorDetails[path].push(message)
-        })
-
-        return h.response({
-          message: 'Validation Error',
-          details: errorDetails
-        }).code(400)
-      } else {
-        return h.response({
-          message: error.message
-        }).code(400)
-      }
+      return h.response({
+        message: error.message
+      }).code(400)
     }
   },
 
@@ -72,7 +47,6 @@ const userController = {
     try {
       let { password, email } = request.payload
       let verifyUser
-
       if (email) {
         email = email.toLowerCase()
         verifyUser = await User.findOne({
@@ -109,7 +83,6 @@ const userController = {
         token,
         email,
         name: verifyUser.name
-
       })
     } catch (error) {
       return h.response({
@@ -123,17 +96,17 @@ const userController = {
       const token = request.headers.authorization
       if (!token) {
         return h.response({
-          message: 'Token tidak ditemukan'
+          message: 'Token diperlukan!'
         }).code(403)
       }
 
-      /* `const expiredAt = new Date(request.auth.credentials.exp * 1000)` is converting the expiration
-      time of the JWT token (which is in Unix timestamp format) to a JavaScript Date object. The
-      `request.auth.credentials.exp` is the expiration time of the JWT token in Unix timestamp
-      format, which is the number of seconds since January 1, 1970, 00:00:00 UTC. Multiplying it by
-      1000 converts it to milliseconds, which is the format required by the `Date` constructor. The
-      resulting `expiredAt` variable is a JavaScript Date object representing the expiration time of
-      the JWT token. */
+      /* `const expiredAt = new Date(request.auth.credentials.exp * 1000)` mengonversi masa berlaku
+       waktu token JWT (yang dalam format stempel waktu Unix) ke objek Tanggal JavaScript.
+       `request.auth.credentials.exp` adalah waktu kedaluwarsa token JWT di stempel waktu Unix
+       format, yaitu jumlah detik sejak 1 Januari 1970, 00:00:00 UTC. Mengalikannya dengan
+       1000 mengubahnya menjadi milidetik, yang merupakan format yang diperlukan oleh konstruktor `Date`. Itu
+       variabel `expiredAt` yang dihasilkan adalah objek Tanggal JavaScript yang mewakili waktu kedaluwarsa
+       token JWT. */
       const expiredAt = new Date(request.auth.credentials.exp * 1000)
       await blockedToken.create({ token, expiredAt })
 
@@ -147,5 +120,3 @@ const userController = {
     }
   }
 }
-
-module.exports = userController

@@ -1,11 +1,11 @@
-// TODO fungsi penanganan untuk ML
 const Boom = require('@hapi/boom')
-const createHistory = require('./historyControllers')
+const { createHistory } = require('./historyControllers')
 const sharp = require('sharp')
 const fs = require('fs')
 const path = require('path')
 const { penanganan } = require('../models')
-
+const { uploadGCS } = require('../helpers/cloudStorage')
+let imagePath
 module.exports = {
   predict: async (request, h) => {
     try {
@@ -28,10 +28,10 @@ module.exports = {
       if (!fs.existsSync(tempDir)) {
         fs.mkdirSync(tempDir)
       }
-      const imagePath = path.join(tempDir, fileName)
+      imagePath = path.join(tempDir, fileName)
       fs.writeFileSync(imagePath, convertedImageBuffer)
 
-      // Perform HTTP POST request to localhost:5000/predict
+      // Lakukan permintaan HTTP POST ke localhost:5000/predict
       const apiUrl = 'http://localhost:5000/predict'
       const requestData = {
         imagePath
@@ -43,22 +43,32 @@ module.exports = {
         },
         body: JSON.stringify(requestData)
       })
+
       const responseData = await response.json()
-      createHistory.createHistory(userId, responseData.prediction)
-      // TODO Penanganan
+      // Mendapatkan URL gambar
+      const imageUrl = await uploadGCS(imagePath, fileName).then(imageUrl => {
+        return imageUrl
+      }).catch(error => {
+        throw Boom.badGateway(error)
+      })
+      // Membuat history
+      createHistory(userId, responseData.prediction, imageUrl)
+      // Penanganan
       const hasil = await penanganan.findOne({
         where: {
           penyakit: responseData.prediction
         },
         attributes: ['penyakit', 'penanganan']
       })
+      // Menghapus gambar sementara
       fs.unlinkSync(imagePath)
       return h.response({
         penyakit: hasil.penyakit,
-        penanganan: hasil.penanganan
+        penanganan: hasil.penanganan,
+        imageUrl
       })
     } catch (error) {
-      console.log(error)
+      fs.unlinkSync(imagePath)
       throw Boom.badData()
     }
   }
