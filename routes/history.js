@@ -1,5 +1,5 @@
 const { Authentication } = require('../middleware/Authentication')
-const { listHistory, deleteHistory, getHistoryById } = require('../controllers/historyControllers')
+const { listHistory, deleteHistoryById, getHistoryById } = require('../controllers/historyControllers')
 const historyRoutes = [
   {
     path: '/getHistory/{id}',
@@ -19,9 +19,9 @@ const historyRoutes = [
 
   },
   {
-    path: '/deleteHistory',
+    path: '/deleteHistory/{id}',
     method: 'post',
-    handler: deleteHistory,
+    handler: deleteHistoryById,
     options: {
       pre: [Authentication]
     }

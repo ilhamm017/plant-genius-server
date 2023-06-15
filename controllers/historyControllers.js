@@ -1,7 +1,6 @@
 const Boom = require('@hapi/boom')
 const { History } = require('../models')
 const { penanganan } = require('../models')
-const { Op } = require('sequelize')
 
 module.exports = {
   createHistory: async (userId, result, imageUrl) => {
@@ -56,14 +55,12 @@ module.exports = {
     }
   },
 
-  deleteHistory: async (request, h) => {
+  deleteHistoryById: async (request, h) => {
     try {
-      const { historyIds } = request.payload
+      const historyId = request.params.id
       await History.destroy({
         where: {
-          id: {
-            [Op.in]: historyIds
-          }
+          id: historyId
         }
       })
       return h.response({
